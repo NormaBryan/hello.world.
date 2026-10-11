@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dinosaur Eats Hello World</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; overflow: hidden;
+  background: #172554; font-family: Arial, sans-serif;
+  transition: background 0.5s;
+}
+h1 {
+  position: absolute; top: 35%; left: 55%;
+  color: white; font-size: clamp(24px, 5vw, 55px);
+  text-shadow: 3px 4px 6px #000;
+  white-space: nowrap; z-index: 2;
+}
+.dino {
+  position: absolute; top: 30%; left: 10%;
+  width: 220px; height: 230px;
+  z-index: 3;
+}
+.head {
+  position: absolute; top: 0; left: 35px;
+  font-size: 125px; transform-origin: 50% 75%;
+}
+.mouth {
+  position: absolute; top: 105px; left: 110px;
+  font-size: 55px; opacity: 0;
+}
+.controls {
+  position: fixed; bottom: 35px; width: 100%;
+  text-align: center; z-index: 10;
+}
+button {
+  padding: 15px 22px; margin: 6px;
+  border: 0; border-radius: 12px;
+  background: #38bdf8; font-size: 17px;
+  font-weight: bold; cursor: pointer;
+}
+button:hover { background: #facc15; }
+.eating .head { animation: chomp 1s ease-in-out 2; }
+.eating .mouth { animation: teeth 2s; }
+.eating #hello { animation: swallow 4s ease-in-out; }
+@keyframes chomp {
+  0%,100% { transform: rotate(0deg); }
+  50% { transform: rotate(-25deg) scale(1.12); }
+}
+@keyframes teeth {
+  0%,100% { opacity: 0; }
+  30%,75% { opacity: 1; }
+}
+@keyframes swallow {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  35% { transform: translate(-45vw,30px) scale(.4); opacity: 1; }
+  50% { transform: translate(-48vw,30px) scale(0); opacity: 0; }
+  70% { transform: translate(-48vw,30px) scale(0); opacity: 0; }
+  100% { transform: translate(0,0) scale(1); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div id="scene">
+  <div class="dino">
+    <div class="head">🦖</div>
+    <div class="mouth">🦷</div>
+  </div>
+  <h1 id="hello">🌍 Hello World!</h1>
+</div>
+<div class="controls">
+  <button onclick="changeColour()">🎨 Change Background</button>
+  <button onclick="eatHello()">🦖 Eat Hello World!</button>
+</div>
+<script>
+let busy = false;
+function changeColour() {
+  const colours = ["#172554","#7c3aed","#be185d",
+                   "#047857","#c2410c","#0f766e"];
+  document.body.style.background =
+    colours[Math.floor(Math.random()*colours.length)];
+}
+function eatHello() {
+  if (busy) return;
+  busy = true;
+  const scene = document.getElementById("scene");
+  scene.classList.add("eating");
+  setTimeout(() => {
+    scene.classList.remove("eating");
+    busy = false;
+  }, 4000);
+}
+</script>
+</body>
+</html>
